@@ -24,12 +24,37 @@ namespace Academy.Week2.MostriVSEroi.Core.BusinessLayers
 
         public Utente Accedi(string? nickname, string? password)
         {
-            return MockUtenteRepository.FetchAll(u => u.Nickname == nickname && u.Password==password).First();
+            return MockUtenteRepository.FetchAll(u => u.Nickname == nickname && u.Password==password).FirstOrDefault();
         }
 
-        public bool CheckNickname(string? nickname)
+        public bool NicknameExists(string? nickname)
         {
             return !MockUtenteRepository.FetchAll(u=>u.Nickname == nickname).Any();
+        }
+
+        public bool Add(Utente user)
+        {
+            return MockUtenteRepository.Add(user);
+        }
+
+        public IEnumerable<Eroe> GetEroi(int id)
+        {
+            return MockEroeRepository.FetchAll(e => e.IdUtente == id);
+        }
+
+        public bool RemoveEroe(Eroe eroe)
+        {
+            return MockEroeRepository.Remove(eroe);
+        }
+
+        public IEnumerable<Arma> GetArmiByCategory(int category)
+        {
+            return MockArmaRepository.FetchAll(a=>(int)a.CategoriaArma == category);
+        }
+
+        public bool Add(Eroe eroe)
+        {
+            return MockEroeRepository.Add(eroe);
         }
     }
 }

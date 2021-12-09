@@ -8,11 +8,11 @@ namespace Academy.Week2.MostriVSEroi.Core.Models
 {
     public enum TipoArma
     {
-        ArmaGuerriero,
-        ArmaMago,
-        ArmaCultista,
-        ArmaOrco,
-        ArmaSignoreDelMale,
+        ArmaGuerriero = 1,
+        ArmaMago = 2,
+        ArmaCultista = 3,
+        ArmaOrco = 4,
+        ArmaSignoreDelMale = 5,
     }
     public class Arma
     {

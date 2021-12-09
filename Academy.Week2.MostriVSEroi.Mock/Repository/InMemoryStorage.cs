@@ -17,9 +17,9 @@ namespace Academy.Week2.MostriVSEroi.Mock.Repository
         public static List<Eroe> Eroe = new List<Eroe>()
         {
             new Eroe(){ Id = 1, Nome="Eroe1", PuntiAccumulati=120,IdArma=1,Categoria=CategoriaEroe.Guerriero,IdUtente=1},
-            new Eroe(){ Id = 1, Nome="Eroe1", PuntiAccumulati=30,IdArma=5,Categoria=CategoriaEroe.Guerriero,IdUtente=2},
-            new Eroe(){ Id = 1, Nome="Eroe1", PuntiAccumulati=160,IdArma=8,Categoria=CategoriaEroe.Guerriero,IdUtente=1},
-            new Eroe(){ Id = 1, Nome="Eroe1", PuntiAccumulati=65,IdArma=9,Categoria=CategoriaEroe.Mago,IdUtente=2},
+            new Eroe(){ Id = 2, Nome="Eroe2", PuntiAccumulati=30,IdArma=5,Categoria=CategoriaEroe.Guerriero,IdUtente=2},
+            new Eroe(){ Id = 3, Nome="Eroe3", PuntiAccumulati=160,IdArma=8,Categoria=CategoriaEroe.Mago,IdUtente=1},
+            new Eroe(){ Id = 4, Nome="Eroe4", PuntiAccumulati=65,IdArma=9,Categoria=CategoriaEroe.Mago,IdUtente=2},
         };
         public static List<Mostro> Mostri = new List<Mostro>()
         {

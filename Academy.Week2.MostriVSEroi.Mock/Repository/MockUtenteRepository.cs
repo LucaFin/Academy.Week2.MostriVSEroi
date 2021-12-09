@@ -10,6 +10,15 @@ namespace Academy.Week2.MostriVSEroi.Mock.Repository
 {
     public class MockUtenteRepository : IUtenteRepository
     {
+        public bool Add(Utente user)
+        {
+            user.IsAdmin = false;
+            user.Id = InMemoryStorage.Utenti.Max(u=>u.Id) + 1;
+            int count = InMemoryStorage.Utenti.Count;
+            InMemoryStorage.Utenti.Add(user);
+            return count < InMemoryStorage.Utenti.Count;
+        }
+
         public IEnumerable<Utente> FetchAll(Func<Utente, bool> filter = null)
         {
             if (filter == null)
@@ -17,6 +26,11 @@ namespace Academy.Week2.MostriVSEroi.Mock.Repository
                 return InMemoryStorage.Utenti;
             }
             return InMemoryStorage.Utenti.Where(filter);
+        }
+
+        public bool Remove(Utente item)
+        {
+            throw new NotImplementedException();
         }
     }
 }

@@ -8,9 +8,9 @@ namespace Academy.Week2.MostriVSEroi.Core.Models
 {
     public enum CategoriaMostro
     {
-        Cultista,
-        Orco,
-        SignoreDelMale
+        Cultista = 1,
+        Orco = 2 ,
+        SignoreDelMale =3 
     }
     public class Mostro
     {

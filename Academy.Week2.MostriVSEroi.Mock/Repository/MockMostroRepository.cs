@@ -1,4 +1,5 @@
 ﻿using Academy.Week2.MostriVSEroi.Core.Interfaces;
+using Academy.Week2.MostriVSEroi.Core.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,7 +8,21 @@ using System.Threading.Tasks;
 
 namespace Academy.Week2.MostriVSEroi.Mock.Repository
 {
-    public class MockMostroRepository:IMostroRepository
+    public class MockMostroRepository : IMostroRepository
     {
+        public bool Add(Mostro item)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IEnumerable<Mostro> FetchAll(Func<Mostro, bool> filter = null)
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool Remove(Mostro item)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

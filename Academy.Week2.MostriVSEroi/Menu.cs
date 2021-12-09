@@ -55,7 +55,7 @@ namespace Academy.Week2.MostriVSEroi.Client
             {
                 Console.WriteLine("Inserisci Nickname");
                 nickname = Console.ReadLine();
-                var = mainBL.CheckNickname(nickname);
+                var = mainBL.NicknameExists(nickname);
                 if (!var)
                 {
                     Console.WriteLine("Nickname già preso, sei arrivato tardi");
@@ -63,6 +63,15 @@ namespace Academy.Week2.MostriVSEroi.Client
             } while (!var);
             Console.WriteLine("Inserisci Password");
             string password = Console.ReadLine();
+            Utente user = new Utente();
+            user.Nickname = nickname;
+            user.Password = password;
+            if (mainBL.Add(user))
+            {
+                Console.WriteLine("Registrazione avvenuta con successo");
+                UserMenu(user);
+            }
+
         }
 
         private static void Accedi()
@@ -96,7 +105,126 @@ namespace Academy.Week2.MostriVSEroi.Client
 
         private static void UserMenu(Utente utente)
         {
-            throw new NotImplementedException();
+            char choice;
+            do
+            {
+                Console.WriteLine("[1] Gioca" +
+                    "\n[2] Crea Nuovo Eroe" +
+                    "\n[3] Elimina Eroe" +
+                    "\n[q] Esci");
+
+                choice = Console.ReadKey().KeyChar;
+                Console.WriteLine();
+
+                switch (choice)
+                {
+                    case '1':
+                        Gioca(utente);
+                        break;
+                    case '2':
+                        CreaEroe(utente);
+                        break;
+                    case '3':
+                        EliminaEroe(utente);
+                        break;
+                    case 'q':
+                        return;
+                    default:
+                        Console.WriteLine("Scelta non disponibile. Riprova!");
+                        break;
+                }
+
+            } while (!(choice == 'q'));
+        }
+
+        private static void EliminaEroe(Utente utente)
+        {
+            IEnumerable<Eroe> eroes = mainBL.GetEroi(utente.Id);
+            StampaEroi(eroes);
+            Console.WriteLine("inserisci id dell'eroe da eliminare");
+            int id;
+            while (!int.TryParse(Console.ReadLine(), out id))
+            {
+                Console.WriteLine("Inserisci un valore valido");
+            }
+            if (mainBL.RemoveEroe(eroes.Where(e => e.Id == id).FirstOrDefault()))
+            {
+                Console.WriteLine("L'eroe è stato cancellato");
+            }
+        }
+
+        private static void StampaEroi(IEnumerable<Eroe> eroi)
+        {
+            if(eroi.Count() == 0)
+            {
+                Console.WriteLine("Non possiedi eroi");
+            }
+            foreach (Eroe e in eroi)
+            {
+                Console.WriteLine(e.ToString());
+            }
+        }
+
+        private static void CreaEroe(Utente utente)
+        {
+            Console.WriteLine("Inserire nome dell'eroe");
+            string nomeEroe=Console.ReadLine();
+            Console.WriteLine("Seleziona Categoria");
+            int i = 1;
+            foreach(string categoria in Enum.GetNames(typeof(CategoriaEroe)))
+            {
+                Console.WriteLine(i + " " + categoria);
+                i++;
+            }
+            int category;
+            while (!int.TryParse(Console.ReadLine(), out category) || category>=i)
+            {
+                Console.WriteLine("Inserisci un valore valido");
+            }
+            Console.WriteLine("Seleziona id Arma");
+            IEnumerable<Arma>  armi = mainBL.GetArmiByCategory(category);
+            StampaArma(armi);
+            int IdArma;
+            while (!int.TryParse(Console.ReadLine(), out IdArma) || !armi.Where(a=>a.Id==IdArma).Any())
+            {
+                Console.WriteLine("Inserisci un valore valido");
+            }
+            Eroe eroe = new Eroe();
+            eroe.IdArma= IdArma;
+            eroe.Nome = nomeEroe;
+            eroe.Categoria = (CategoriaEroe)category;
+            eroe.IdUtente = utente.Id;
+            mainBL.Add(eroe);
+        }
+
+        private static void StampaArma(IEnumerable<Arma> armi)
+        {
+            foreach(Arma arma in armi)
+            {
+                Console.WriteLine(arma.ToString());
+            }
+        }
+
+        private static void Gioca(Utente utente)
+        {
+            IEnumerable<Eroe> eroes = mainBL.GetEroi(utente.Id);
+            StampaEroi(eroes);
+            Eroe eroe;
+            Console.WriteLine("inserisci id dell'eroe con cui giocare");
+            do
+            {
+                int id;
+                while (!int.TryParse(Console.ReadLine(), out id))
+                {
+                    Console.WriteLine("Inserisci un valore valido");
+                }
+                eroe = eroes.Where(e => e.Id == id).FirstOrDefault();
+                if(eroe == null)
+                {
+                    Console.WriteLine("non esiste un eroe con quell'id");
+                }
+            }while(eroe== null);
+            //TODO gameplay
         }
     }
 }

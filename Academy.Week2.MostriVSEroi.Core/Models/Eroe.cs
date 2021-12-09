@@ -8,8 +8,8 @@ namespace Academy.Week2.MostriVSEroi.Core.Models
 {
     public enum CategoriaEroe
     {
-        Guerriero,
-        Mago
+        Guerriero = 1,
+        Mago= 2
     }
     public class Eroe
     {

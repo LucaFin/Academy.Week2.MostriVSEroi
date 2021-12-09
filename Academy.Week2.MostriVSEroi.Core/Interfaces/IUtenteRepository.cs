@@ -8,6 +8,6 @@ using System.Threading.Tasks;
 namespace Academy.Week2.MostriVSEroi.Core.Interfaces
 {
     public interface IUtenteRepository : IRepository<Utente>
-    {
+    { 
     }
 }
