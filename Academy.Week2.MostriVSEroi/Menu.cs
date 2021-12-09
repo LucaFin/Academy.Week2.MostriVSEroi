@@ -49,7 +49,20 @@ namespace Academy.Week2.MostriVSEroi.Client
 
         private static void Registrati()
         {
-
+            string nickname;
+            bool var;
+            do
+            {
+                Console.WriteLine("Inserisci Nickname");
+                nickname = Console.ReadLine();
+                var = mainBL.CheckNickname(nickname);
+                if (!var)
+                {
+                    Console.WriteLine("Nickname già preso, sei arrivato tardi");
+                }
+            } while (!var);
+            Console.WriteLine("Inserisci Password");
+            string password = Console.ReadLine();
         }
 
         private static void Accedi()
@@ -59,7 +72,31 @@ namespace Academy.Week2.MostriVSEroi.Client
             Console.WriteLine("Inserisci Password");
             string password=Console.ReadLine();
             Utente utente = mainBL.Accedi(nickname,password);
+            if(utente == null)
+            {
+                Console.WriteLine("\nnickname e/o password errati");
+            }
+            else
+            {
+                if (utente.IsAdmin)
+                {
+                    AdminMenu(utente);
+                }
+                else
+                {
+                    UserMenu(utente);
+                }
+            }
+        }
 
+        private static void AdminMenu(Utente utente)
+        {
+            throw new NotImplementedException();
+        }
+
+        private static void UserMenu(Utente utente)
+        {
+            throw new NotImplementedException();
         }
     }
 }

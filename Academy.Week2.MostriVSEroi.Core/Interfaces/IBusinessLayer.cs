@@ -10,5 +10,6 @@ namespace Academy.Week2.MostriVSEroi.Core.Interfaces
     public interface IBusinessLayer
     {
         Utente Accedi(string? nickname, string? password);
+        bool CheckNickname(string? nickname);
     }
 }

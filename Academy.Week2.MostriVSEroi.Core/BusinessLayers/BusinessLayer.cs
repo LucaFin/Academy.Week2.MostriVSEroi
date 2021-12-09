@@ -24,7 +24,12 @@ namespace Academy.Week2.MostriVSEroi.Core.BusinessLayers
 
         public Utente Accedi(string? nickname, string? password)
         {
-            return MockUtenteRepository.FetchAll(u => u.Nickname == nickname).First(u => u.Password == password);
+            return MockUtenteRepository.FetchAll(u => u.Nickname == nickname && u.Password==password).First();
+        }
+
+        public bool CheckNickname(string? nickname)
+        {
+            return !MockUtenteRepository.FetchAll(u=>u.Nickname == nickname).Any();
         }
     }
 }

@@ -12,6 +12,10 @@ namespace Academy.Week2.MostriVSEroi.Mock.Repository
     {
         public IEnumerable<Utente> FetchAll(Func<Utente, bool> filter = null)
         {
+            if (filter == null)
+            {
+                return InMemoryStorage.Utenti;
+            }
             return InMemoryStorage.Utenti.Where(filter);
         }
     }
