@@ -12,22 +12,22 @@ namespace Academy.Week2.MostriVSEroi.Mock.Repository
         public static List<Utente> Utenti = new List<Utente>()
         {
             new Utente(){Id = 1,Nickname="Amministratore",Password="qwerty",IsAdmin=true},
-            new Utente(){Id = 1,Nickname="ComuneMortale",Password="pippo",IsAdmin=false}
+            new Utente(){Id = 2,Nickname="ComuneMortale",Password="pippo",IsAdmin=false}
         };
         public static List<Eroe> Eroe = new List<Eroe>()
         {
-            new Eroe(){ Id = 1, Nome="Eroe1", PuntiAccumulati=120,IdArma=1,Categoria=CategoriaEroe.Guerriero,IdUtente=1},
-            new Eroe(){ Id = 2, Nome="Eroe2", PuntiAccumulati=30,IdArma=5,Categoria=CategoriaEroe.Guerriero,IdUtente=2},
-            new Eroe(){ Id = 3, Nome="Eroe3", PuntiAccumulati=160,IdArma=8,Categoria=CategoriaEroe.Mago,IdUtente=1},
-            new Eroe(){ Id = 4, Nome="Eroe4", PuntiAccumulati=65,IdArma=9,Categoria=CategoriaEroe.Mago,IdUtente=2},
+            new Eroe(){ Id = 1, Nome="Eroe1",Livello=5, PuntiVita=100, PuntiAccumulati=120,IdArma=1,Categoria=CategoriaEroe.Guerriero,IdUtente=1},
+            new Eroe(){ Id = 2, Nome="Eroe2",Livello=2, PuntiVita=40, PuntiAccumulati=30,IdArma=5,Categoria=CategoriaEroe.Guerriero,IdUtente=2},
+            new Eroe(){ Id = 3, Nome="Eroe3",Livello=5, PuntiVita=100, PuntiAccumulati=160,IdArma=8,Categoria=CategoriaEroe.Mago,IdUtente=1},
+            new Eroe(){ Id = 4, Nome="Eroe4",Livello=3, PuntiVita=60, PuntiAccumulati=65,IdArma=9,Categoria=CategoriaEroe.Mago,IdUtente=2},
         };
         public static List<Mostro> Mostri = new List<Mostro>()
         {
-            new Mostro(){Nome="Mostro1",Livello=1,IdArma=11,Categoria=CategoriaMostro.Cultista},
-            new Mostro(){Nome="Mostro1",Livello=2,IdArma=12,Categoria=CategoriaMostro.Cultista},
-            new Mostro(){Nome="Mostro1",Livello=3,IdArma=15,Categoria=CategoriaMostro.Orco},
-            new Mostro(){Nome="Mostro1",Livello=4,IdArma=18,Categoria=CategoriaMostro.Orco},
-            new Mostro(){Nome="Mostro1",Livello=5,IdArma=24,Categoria=CategoriaMostro.SignoreDelMale}
+            new Mostro(){Nome="Mostro1",PuntiVita=20,Livello=1,IdArma=11,Categoria=CategoriaMostro.Cultista},
+            new Mostro(){Nome="Mostro2",PuntiVita=40,Livello=2,IdArma=12,Categoria=CategoriaMostro.Cultista},
+            new Mostro(){Nome="Mostro3",PuntiVita=60,Livello=3,IdArma=15,Categoria=CategoriaMostro.Orco},
+            new Mostro(){Nome="Mostro4",PuntiVita=80,Livello=4,IdArma=18,Categoria=CategoriaMostro.Orco},
+            new Mostro(){Nome="Mostro5",PuntiVita=100,Livello=5,IdArma=24,Categoria=CategoriaMostro.SignoreDelMale}
         };
         public static List<Arma> Armi = new List<Arma> {
             new Arma(){NomeArma="Alabarda", Danno=15,CategoriaArma=TipoArma.ArmaGuerriero},

@@ -40,7 +40,6 @@ namespace Academy.Week2.MostriVSEroi.Core.Models
 
         public Eroe()
         {
-            LevelUp();
         }
 
         public override string ToString()

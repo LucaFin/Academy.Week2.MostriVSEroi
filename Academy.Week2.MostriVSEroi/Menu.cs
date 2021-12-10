@@ -100,11 +100,104 @@ namespace Academy.Week2.MostriVSEroi.Client
 
         private static void AdminMenu(Utente utente)
         {
-            throw new NotImplementedException();
+            char choice;
+            do
+            {
+                Console.WriteLine("[1] Gioca" +
+                    "\n[2] Crea Nuovo Eroe" +
+                    "\n[3] Elimina Eroe" +
+                    "\n[4] Crea Mostro" +
+                    "\n[5] Mostra classifica" +
+                    "\n[q] Esci");
+
+                choice = Console.ReadKey().KeyChar;
+                Console.WriteLine();
+
+                switch (choice)
+                {
+                    case '1':
+                        Gioca(utente);
+                        break;
+                    case '2':
+                        CreaEroe(utente);
+                        break;
+                    case '3':
+                        EliminaEroe(utente);
+                        break;
+                    case '4':
+                        CreaMostro();
+                        break;
+                    case '5':
+                        LeaderBoard();
+                        break;
+                    case 'q':
+                        return;
+                    default:
+                        Console.WriteLine("Scelta non disponibile. Riprova!");
+                        break;
+                }
+
+            } while (!(choice == 'q'));
+        }
+
+        private static void LeaderBoard()
+        {
+            IEnumerable<LeaderBoard> best = mainBL.Leaderboard();
+            foreach (LeaderBoard item in best)
+            {
+                Console.WriteLine($"NomeEroe:{item.eroe}, Punteggio:{item.exp}, Proprietario:{item.utente}");
+            }
+        }
+
+        private static void StampaMigliori(IEnumerable<(string, int, string)> best)
+        {
+            
+        }
+
+        private static void CreaMostro()
+        {
+            Console.WriteLine("Inserire nome del mostro");
+            string nomeMostro = Console.ReadLine();
+            Console.WriteLine("Seleziona Categoria");
+            int i = 1;
+            foreach (string categoria in Enum.GetNames(typeof(CategoriaMostro)))
+            {
+                Console.WriteLine(i + " " + categoria);
+                i++;
+            }
+            int category;
+            while (!int.TryParse(Console.ReadLine(), out category) || category >= i)
+            {
+                Console.WriteLine("Inserisci un valore valido");
+            }
+            Console.WriteLine("Seleziona id Arma");
+            CategoriaMostro tipoArma = (CategoriaMostro)category;
+            string arma = $"Arma{tipoArma}";
+            IEnumerable<Arma> armi = mainBL.GetArmiByCategory(arma);
+            StampaArma(armi);
+            int IdArma;
+            while (!int.TryParse(Console.ReadLine(), out IdArma) || !armi.Where(a => a.Id == IdArma).Any())
+            {
+                Console.WriteLine("Inserisci un valore valido");
+            }
+            int livello;
+            Console.WriteLine("Seleziona livello mostro");
+            while (!int.TryParse(Console.ReadLine(), out livello) || (livello < 1 || livello > 5))
+            {
+                Console.WriteLine("Inserisci un valore valido tra 0 e 5");
+            }
+            Mostro mostro = new Mostro();
+            mostro.Nome = nomeMostro;
+            mostro.Livello = livello;
+            mostro.IdArma = IdArma;
+            mostro.Categoria = (CategoriaMostro)category;
+            mostro.PuntiVita = livello * 20;
+            mainBL.Add(mostro);
         }
 
         private static void UserMenu(Utente utente)
         {
+
             char choice;
             do
             {
@@ -182,7 +275,9 @@ namespace Academy.Week2.MostriVSEroi.Client
                 Console.WriteLine("Inserisci un valore valido");
             }
             Console.WriteLine("Seleziona id Arma");
-            IEnumerable<Arma>  armi = mainBL.GetArmiByCategory(category);
+            CategoriaEroe tipoArma = (CategoriaEroe)category;
+            string arma = $"Arma{tipoArma}";
+            IEnumerable<Arma>  armi = mainBL.GetArmiByCategory(arma);
             StampaArma(armi);
             int IdArma;
             while (!int.TryParse(Console.ReadLine(), out IdArma) || !armi.Where(a=>a.Id==IdArma).Any())

@@ -1,4 +1,5 @@
-﻿using Academy.Week2.MostriVSEroi.Core.Models;
+﻿using Academy.Week2.MostriVSEroi.Core.BusinessLayers;
+using Academy.Week2.MostriVSEroi.Core.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,7 +15,9 @@ namespace Academy.Week2.MostriVSEroi.Core.Interfaces
         bool Add(Utente user);
         IEnumerable<Eroe> GetEroi(int id);
         bool RemoveEroe(Eroe eroe);
-        IEnumerable<Arma> GetArmiByCategory(int category);
+        IEnumerable<Arma> GetArmiByCategory(string category);
         bool Add(Eroe eroe);
+        bool Add(Mostro mostro);
+        IEnumerable<LeaderBoard> Leaderboard();
     }
 }

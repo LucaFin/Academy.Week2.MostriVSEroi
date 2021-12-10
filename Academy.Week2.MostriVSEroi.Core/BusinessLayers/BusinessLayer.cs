@@ -8,6 +8,12 @@ using System.Threading.Tasks;
 
 namespace Academy.Week2.MostriVSEroi.Core.BusinessLayers
 {
+    public struct LeaderBoard
+    {
+        public string eroe;
+        public int exp;
+        public string utente;
+    }
     public class BusinessLayer : IBusinessLayer
     {
         public IArmaRepository MockArmaRepository { get; set; }
@@ -47,14 +53,39 @@ namespace Academy.Week2.MostriVSEroi.Core.BusinessLayers
             return MockEroeRepository.Remove(eroe);
         }
 
-        public IEnumerable<Arma> GetArmiByCategory(int category)
+        public IEnumerable<Arma> GetArmiByCategory(string category)
         {
-            return MockArmaRepository.FetchAll(a=>(int)a.CategoriaArma == category);
+            TipoArma arma; 
+            Enum.TryParse<TipoArma>(category,out arma);
+            return MockArmaRepository.FetchAll(a => a.CategoriaArma == arma);
         }
 
         public bool Add(Eroe eroe)
         {
             return MockEroeRepository.Add(eroe);
+        }
+
+        public bool Add(Mostro mostro)
+        {
+            return MockMostroRepository.Add(mostro);
+        }
+
+        public IEnumerable<LeaderBoard> Leaderboard()
+        {
+            IEnumerable<Eroe> eroi = MockEroeRepository.FetchAll().OrderByDescending(e => e.PuntiAccumulati).Take(10);
+            IEnumerable<Utente> utenti = MockUtenteRepository.FetchAll();
+            var best = eroi.Join(
+                utenti,
+                e=>e.IdUtente,
+                u=>u.Id,
+                (e,u)=> new LeaderBoard()
+                {
+                    eroe = e.Nome,
+                    exp = e.PuntiAccumulati,
+                    utente = u.Nickname
+                }
+                );
+            return best;
         }
     }
 }

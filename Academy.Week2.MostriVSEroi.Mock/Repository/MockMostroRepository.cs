@@ -10,9 +10,11 @@ namespace Academy.Week2.MostriVSEroi.Mock.Repository
 {
     public class MockMostroRepository : IMostroRepository
     {
-        public bool Add(Mostro item)
+        public bool Add(Mostro mostro)
         {
-            throw new NotImplementedException();
+            int count = InMemoryStorage.Mostri.Count;
+            InMemoryStorage.Mostri.Add(mostro);
+            return count < InMemoryStorage.Mostri.Count;
         }
 
         public IEnumerable<Mostro> FetchAll(Func<Mostro, bool> filter = null)
