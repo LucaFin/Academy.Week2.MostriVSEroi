@@ -313,7 +313,7 @@ namespace Academy.Week2.MostriVSEroi.Client
                 {
                     Console.WriteLine("non esiste un eroe con quell'id");
                 }
-            }while(eroe== null);
+            }while(eroe == null);
             Gameplay(utente,eroe);
         }
 
@@ -322,6 +322,7 @@ namespace Academy.Week2.MostriVSEroi.Client
             int fullVitaEroe = eroe.PuntiVita;
             int fullVitaMostro;
             Mostro mostro = mainBL.GetMostro(eroe.Livello);
+            Console.WriteLine($"stai combattendo con {mostro.ToString()}");
             fullVitaMostro = mostro.PuntiVita;
             bool turnoEroe = true;
             bool fineBattaglia;
@@ -330,6 +331,78 @@ namespace Academy.Week2.MostriVSEroi.Client
                 fineBattaglia = turnoEroe ? TurnoEroe(mostro, eroe) : TurnoMostro(mostro, eroe);
                 turnoEroe = !turnoEroe;
             }while (!fineBattaglia);
+            mostro.PuntiVita = fullVitaMostro;
+            if (eroe.Livello >= 3)
+            {
+                utente.IsAdmin = true;
+            }
+            if (ContinuaACombattere())
+            {
+                if (CambiaEroe())
+                {
+                    Gioca(utente);
+                }
+                else
+                {
+                    Gameplay(utente, eroe);
+                }
+            }
+        }
+
+        private static bool ContinuaACombattere()
+        {
+            char choice;
+            bool continua = false;
+            do
+            {
+                Console.WriteLine("[1] Continua" +
+                    "\n[2] Esci");
+
+                choice = Console.ReadKey().KeyChar;
+                Console.WriteLine();
+
+                switch (choice)
+                {
+                    case '1':
+                        continua = true;
+                        break;
+                    case '2':
+                        continua = false;
+                        break;
+                    default:
+                        Console.WriteLine("Scelta non disponibile. Riprova!");
+                        break;
+                }
+            } while (!(choice == '1' || choice == '2'));
+            return continua;
+        }
+
+        private static bool CambiaEroe()
+        {
+            char choice;
+            bool cambio = false;
+            do
+            {
+                Console.WriteLine("[1] Cambia Eroe" +
+                    "\n[2] Continua con quello attuale");
+
+                choice = Console.ReadKey().KeyChar;
+                Console.WriteLine();
+
+                switch (choice)
+                {
+                    case '1':
+                        cambio = true;
+                        break;
+                    case '2':
+                        cambio = false;
+                        break;
+                    default:
+                        Console.WriteLine("Scelta non disponibile. Riprova!");
+                        break;
+                }
+            } while (!(choice == '1' || choice == '2'));
+            return cambio;
         }
 
         private static bool TurnoEroe(Mostro mostro, Eroe eroe)
