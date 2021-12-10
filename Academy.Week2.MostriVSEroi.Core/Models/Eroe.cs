@@ -26,9 +26,10 @@ namespace Academy.Week2.MostriVSEroi.Core.Models
         public void AddExp(int puntiAccumulati)
         {
             PuntiAccumulati += puntiAccumulati;
-            if(Livello < (PuntiAccumulati / 30) + 1 && Livello<5)
+            if(Livello < (PuntiAccumulati / 30) + 1 && PuntiAccumulati<121)
             {
                 LevelUp();
+                PuntiAccumulati = (Livello - 1) * 30;
             }
         }
 
@@ -38,14 +39,9 @@ namespace Academy.Week2.MostriVSEroi.Core.Models
             PuntiVita = Livello * 20;
         }
 
-        public Eroe()
-        {
-        }
-
         public override string ToString()
         {
             return $"Id:{Id} Nome:{Nome} Livello:{Livello} PuntiVita:{PuntiVita} Exp:{PuntiAccumulati} Classe: {Categoria}";
         }
-
     }
 }

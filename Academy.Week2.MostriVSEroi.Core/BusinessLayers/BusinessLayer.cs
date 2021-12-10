@@ -87,5 +87,18 @@ namespace Academy.Week2.MostriVSEroi.Core.BusinessLayers
                 );
             return best;
         }
+
+        public Mostro GetMostro(int livello)
+        {
+            IEnumerable<Mostro> mostri = MockMostroRepository.FetchAll(m => m.Livello <= livello);
+            int max = mostri.Count();
+            Random random = new Random();
+            return mostri.ElementAt(random.Next(max));
+        }
+
+        public Arma GetArma(int idArma)
+        {
+            return MockArmaRepository.FetchAll(a=>a.Id==idArma).FirstOrDefault();
+        }
     }
 }

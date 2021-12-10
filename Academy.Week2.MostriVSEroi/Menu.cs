@@ -149,11 +149,6 @@ namespace Academy.Week2.MostriVSEroi.Client
             }
         }
 
-        private static void StampaMigliori(IEnumerable<(string, int, string)> best)
-        {
-            
-        }
-
         private static void CreaMostro()
         {
             Console.WriteLine("Inserire nome del mostro");
@@ -319,7 +314,86 @@ namespace Academy.Week2.MostriVSEroi.Client
                     Console.WriteLine("non esiste un eroe con quell'id");
                 }
             }while(eroe== null);
-            //TODO gameplay
+            Gameplay(utente,eroe);
+        }
+
+        private static void Gameplay(Utente utente, Eroe eroe)
+        {
+            int fullVitaEroe = eroe.PuntiVita;
+            int fullVitaMostro;
+            Mostro mostro = mainBL.GetMostro(eroe.Livello);
+            fullVitaMostro = mostro.PuntiVita;
+            bool turnoEroe = true;
+            bool fineBattaglia;
+            do
+            {
+                fineBattaglia = turnoEroe ? TurnoEroe(mostro, eroe) : TurnoMostro(mostro, eroe);
+                turnoEroe = !turnoEroe;
+            }while (!fineBattaglia);
+        }
+
+        private static bool TurnoEroe(Mostro mostro, Eroe eroe)
+        {
+            char choice;
+            bool fineBattaglia=false;
+            do
+            {
+                Console.WriteLine("Turno dell'Eroe");
+                Console.WriteLine("[1] Attacca" +
+                    "\n[2] Fuga");
+
+                choice = Console.ReadKey().KeyChar;
+                Console.WriteLine();
+
+                switch (choice)
+                {
+                    case '1':
+                        fineBattaglia = Attacco(mostro,eroe);
+                        if (fineBattaglia)
+                        {
+                            Console.WriteLine($"Hai vinto, guadagni {mostro.Livello*10} exp");
+                            eroe.AddExp(mostro.Livello*10);
+                        }
+                        break;
+                    case '2':
+                        fineBattaglia = Fuga();
+                        if (fineBattaglia)
+                        {
+                            Console.WriteLine($"Sei fuggito, perdi {mostro.Livello * 5} exp");
+                            eroe.AddExp(-mostro.Livello * 5);
+                        }
+                        break;
+                    default:
+                        Console.WriteLine("Scelta non disponibile. Riprova!");
+                        break;
+                }
+            } while (!(choice == '1' || choice == '2'));
+            return fineBattaglia;
+        }
+
+        private static bool Fuga()
+        {
+            Random random = new Random();
+            return random.Next(2)==1;
+        }
+
+        private static bool Attacco(Mostro mostro, Eroe eroe)
+        {
+            int danno = mainBL.GetArma(eroe.IdArma).Danno;
+            Console.WriteLine($"l'eroe infligge un danno di {danno}");
+            mostro.PuntiVita -= danno;
+            Console.WriteLine($"vita rimanente del mostro {(mostro.PuntiVita < 0 ? 0 : mostro.PuntiVita)}");
+            return mostro.PuntiVita <= 0;
+        }
+
+        private static bool TurnoMostro(Mostro mostro, Eroe eroe)
+        {
+            Console.WriteLine("turno del mostro");
+            int danno = mainBL.GetArma(mostro.IdArma).Danno;
+            Console.WriteLine($"il mostro infligge un danno di {danno}");
+            eroe.PuntiVita -= danno;
+            Console.WriteLine($"vita rimanente del player {(eroe.PuntiVita < 0?0:eroe.PuntiVita)}");
+            return eroe.PuntiVita <= 0;
         }
     }
 }

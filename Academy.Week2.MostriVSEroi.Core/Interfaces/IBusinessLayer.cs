@@ -19,5 +19,7 @@ namespace Academy.Week2.MostriVSEroi.Core.Interfaces
         bool Add(Eroe eroe);
         bool Add(Mostro mostro);
         IEnumerable<LeaderBoard> Leaderboard();
+        Mostro GetMostro(int livello);
+        Arma GetArma(int idArma);
     }
 }

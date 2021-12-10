@@ -19,7 +19,11 @@ namespace Academy.Week2.MostriVSEroi.Mock.Repository
 
         public IEnumerable<Mostro> FetchAll(Func<Mostro, bool> filter = null)
         {
-            throw new NotImplementedException();
+            if (filter == null)
+            {
+                return InMemoryStorage.Mostri;
+            }
+            return InMemoryStorage.Mostri.Where(filter);
         }
 
         public bool Remove(Mostro item)
