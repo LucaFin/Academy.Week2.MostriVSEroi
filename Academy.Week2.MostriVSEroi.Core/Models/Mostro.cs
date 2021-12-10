@@ -20,11 +20,6 @@ namespace Academy.Week2.MostriVSEroi.Core.Models
         public int IdArma { get; set; }
         public CategoriaMostro Categoria { get; set; }
 
-        public Mostro()
-        {
-            PuntiVita = Livello * 20;
-        }
-
         public override string ToString()
         {
             return $"Nome:{Nome} Livello:{Livello} PuntiVita:{PuntiVita} Classe: {Categoria}";
