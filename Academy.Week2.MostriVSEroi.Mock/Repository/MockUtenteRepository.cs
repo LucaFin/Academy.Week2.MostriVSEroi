@@ -13,7 +13,7 @@ namespace Academy.Week2.MostriVSEroi.Mock.Repository
         public bool Add(Utente user)
         {
             user.IsAdmin = false;
-            user.Id = InMemoryStorage.Utenti.Max(u=>u.Id) + 1;
+            user.Id = InMemoryStorage.Utenti.Max(u => u.Id) + 1;
             int count = InMemoryStorage.Utenti.Count;
             InMemoryStorage.Utenti.Add(user);
             return count < InMemoryStorage.Utenti.Count;

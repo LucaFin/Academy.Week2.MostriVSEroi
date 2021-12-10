@@ -9,27 +9,35 @@ namespace Academy.Week2.MostriVSEroi.Core.Models
     public enum CategoriaEroe
     {
         Guerriero = 1,
-        Mago= 2
+        Mago = 2
     }
     public class Eroe
     {
         public int Id { get; set; }
         public string Nome { get; set; }
         public int Livello { get; set; }
-        public int PuntiVita { get; set;}
-        public int PuntiAccumulati { get; set;}
+        public int PuntiVita { get; set; }
+        public int PuntiAccumulati { get; set; }
         public int IdArma { get; set; }
         public int IdUtente { get; set; }
         public CategoriaEroe Categoria { get; set; }
-        
+
 
         public void AddExp(int puntiAccumulati)
         {
             PuntiAccumulati += puntiAccumulati;
-            if(Livello < (PuntiAccumulati / 30) + 1 && PuntiAccumulati<121)
+            if (Livello < (PuntiAccumulati / 30) + 1)
             {
-                LevelUp();
-                PuntiAccumulati = (Livello - 1) * 30;
+                if (PuntiAccumulati > 120)
+                {
+                    Livello = 5;
+                    PuntiVita = 120;
+                }
+                else
+                {
+                    LevelUp();
+                    PuntiAccumulati = (Livello - 1) * 30;
+                }
             }
         }
 

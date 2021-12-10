@@ -6,7 +6,8 @@ using System.Threading.Tasks;
 
 namespace Academy.Week2.MostriVSEroi.Core.Interfaces
 {
-    public interface IRepository<T> { 
+    public interface IRepository<T>
+    {
         IEnumerable<T> FetchAll(Func<T, bool> filter = null);
         bool Add(T item);
         bool Remove(T item);

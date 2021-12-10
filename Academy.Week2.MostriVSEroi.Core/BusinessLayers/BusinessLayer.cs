@@ -30,12 +30,12 @@ namespace Academy.Week2.MostriVSEroi.Core.BusinessLayers
 
         public Utente Accedi(string? nickname, string? password)
         {
-            return MockUtenteRepository.FetchAll(u => u.Nickname == nickname && u.Password==password).FirstOrDefault();
+            return MockUtenteRepository.FetchAll(u => u.Nickname == nickname && u.Password == password).FirstOrDefault();
         }
 
         public bool NicknameExists(string? nickname)
         {
-            return !MockUtenteRepository.FetchAll(u=>u.Nickname == nickname).Any();
+            return !MockUtenteRepository.FetchAll(u => u.Nickname == nickname).Any();
         }
 
         public bool Add(Utente user)
@@ -55,8 +55,8 @@ namespace Academy.Week2.MostriVSEroi.Core.BusinessLayers
 
         public IEnumerable<Arma> GetArmiByCategory(string category)
         {
-            TipoArma arma; 
-            Enum.TryParse<TipoArma>(category,out arma);
+            TipoArma arma;
+            Enum.TryParse<TipoArma>(category, out arma);
             return MockArmaRepository.FetchAll(a => a.CategoriaArma == arma);
         }
 
@@ -76,9 +76,9 @@ namespace Academy.Week2.MostriVSEroi.Core.BusinessLayers
             IEnumerable<Utente> utenti = MockUtenteRepository.FetchAll();
             var best = eroi.Join(
                 utenti,
-                e=>e.IdUtente,
-                u=>u.Id,
-                (e,u)=> new LeaderBoard()
+                e => e.IdUtente,
+                u => u.Id,
+                (e, u) => new LeaderBoard()
                 {
                     eroe = e.Nome,
                     exp = e.PuntiAccumulati,
@@ -98,7 +98,7 @@ namespace Academy.Week2.MostriVSEroi.Core.BusinessLayers
 
         public Arma GetArma(int idArma)
         {
-            return MockArmaRepository.FetchAll(a=>a.Id==idArma).FirstOrDefault();
+            return MockArmaRepository.FetchAll(a => a.Id == idArma).FirstOrDefault();
         }
     }
 }

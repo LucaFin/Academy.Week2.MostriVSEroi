@@ -12,7 +12,7 @@ namespace Academy.Week2.MostriVSEroi.Mock.Repository
     {
         public bool Add(Eroe eroe)
         {
-            eroe.Id = InMemoryStorage.Eroe.Max(e=>e.Id)+1;
+            eroe.Id = InMemoryStorage.Eroe.Max(e => e.Id) + 1;
             eroe.Livello = 1;
             eroe.PuntiVita = 20;
             eroe.PuntiAccumulati = 0;
@@ -32,7 +32,7 @@ namespace Academy.Week2.MostriVSEroi.Mock.Repository
 
         public bool Remove(Eroe eroe)
         {
-            if(eroe == null)
+            if (eroe == null)
             {
                 return false;
             }

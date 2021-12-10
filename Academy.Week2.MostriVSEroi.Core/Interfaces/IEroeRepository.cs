@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Academy.Week2.MostriVSEroi.Core.Interfaces
 {
-    public interface IEroeRepository:IRepository<Eroe>
+    public interface IEroeRepository : IRepository<Eroe>
     {
     }
 }

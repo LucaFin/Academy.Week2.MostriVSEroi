@@ -22,7 +22,7 @@ namespace Academy.Week2.MostriVSEroi.Client
             do
             {
                 Console.WriteLine("[1] Accedi" +
-                    "\n[2] Registrati"+
+                    "\n[2] Registrati" +
                     "\n[q] Esci");
 
                 choice = Console.ReadKey().KeyChar;
@@ -77,11 +77,11 @@ namespace Academy.Week2.MostriVSEroi.Client
         private static void Accedi()
         {
             Console.WriteLine("Inserisci Nickname");
-            string nickname=Console.ReadLine();
+            string nickname = Console.ReadLine();
             Console.WriteLine("Inserisci Password");
-            string password=Console.ReadLine();
-            Utente utente = mainBL.Accedi(nickname,password);
-            if(utente == null)
+            string password = Console.ReadLine();
+            Utente utente = mainBL.Accedi(nickname, password);
+            if (utente == null)
             {
                 Console.WriteLine("\nnickname e/o password errati");
             }
@@ -230,7 +230,7 @@ namespace Academy.Week2.MostriVSEroi.Client
             IEnumerable<Eroe> eroes = mainBL.GetEroi(utente.Id);
             StampaEroi(eroes);
             int id;
-            if(eroes.Any())
+            if (eroes.Any())
             {
                 Console.WriteLine("inserisci id dell'eroe da eliminare");
                 while (!int.TryParse(Console.ReadLine(), out id))
@@ -250,7 +250,7 @@ namespace Academy.Week2.MostriVSEroi.Client
 
         private static void StampaEroi(IEnumerable<Eroe> eroi)
         {
-            if(!eroi.Any())
+            if (!eroi.Any())
             {
                 Console.WriteLine("Non possiedi eroi");
             }
@@ -263,31 +263,31 @@ namespace Academy.Week2.MostriVSEroi.Client
         private static void CreaEroe(Utente utente)
         {
             Console.WriteLine("Inserire nome dell'eroe");
-            string nomeEroe=Console.ReadLine();
+            string nomeEroe = Console.ReadLine();
             Console.WriteLine("Seleziona Categoria");
             int i = 1;
-            foreach(string categoria in Enum.GetNames(typeof(CategoriaEroe)))
+            foreach (string categoria in Enum.GetNames(typeof(CategoriaEroe)))
             {
                 Console.WriteLine(i + " " + categoria);
                 i++;
             }
             int category;
-            while (!int.TryParse(Console.ReadLine(), out category) || category>=i)
+            while (!int.TryParse(Console.ReadLine(), out category) || category >= i)
             {
                 Console.WriteLine("Inserisci un valore valido");
             }
             Console.WriteLine("Seleziona id Arma");
             CategoriaEroe tipoArma = (CategoriaEroe)category;
             string arma = $"Arma{tipoArma}";
-            IEnumerable<Arma>  armi = mainBL.GetArmiByCategory(arma);
+            IEnumerable<Arma> armi = mainBL.GetArmiByCategory(arma);
             StampaArma(armi);
             int IdArma;
-            while (!int.TryParse(Console.ReadLine(), out IdArma) || !armi.Where(a=>a.Id==IdArma).Any())
+            while (!int.TryParse(Console.ReadLine(), out IdArma) || !armi.Where(a => a.Id == IdArma).Any())
             {
                 Console.WriteLine("Inserisci un valore valido");
             }
             Eroe eroe = new Eroe();
-            eroe.IdArma= IdArma;
+            eroe.IdArma = IdArma;
             eroe.Nome = nomeEroe;
             eroe.Categoria = (CategoriaEroe)category;
             eroe.IdUtente = utente.Id;
@@ -296,7 +296,7 @@ namespace Academy.Week2.MostriVSEroi.Client
 
         private static void StampaArma(IEnumerable<Arma> armi)
         {
-            foreach(Arma arma in armi)
+            foreach (Arma arma in armi)
             {
                 Console.WriteLine(arma.ToString());
             }
@@ -340,7 +340,7 @@ namespace Academy.Week2.MostriVSEroi.Client
             {
                 fineBattaglia = turnoEroe ? TurnoEroe(mostro, eroe) : TurnoMostro(mostro, eroe);
                 turnoEroe = !turnoEroe;
-            }while (!fineBattaglia);
+            } while (!fineBattaglia);
             eroe.PuntiVita = fullVitaEroe;
             mostro.PuntiVita = fullVitaMostro;
             if (eroe.Livello >= 3)
@@ -419,7 +419,7 @@ namespace Academy.Week2.MostriVSEroi.Client
         private static bool TurnoEroe(Mostro mostro, Eroe eroe)
         {
             char choice;
-            bool fineBattaglia=false;
+            bool fineBattaglia = false;
             do
             {
                 Console.WriteLine("Turno dell'Eroe");
@@ -432,11 +432,11 @@ namespace Academy.Week2.MostriVSEroi.Client
                 switch (choice)
                 {
                     case '1':
-                        fineBattaglia = Attacco(mostro,eroe);
+                        fineBattaglia = Attacco(mostro, eroe);
                         if (fineBattaglia)
                         {
-                            Console.WriteLine($"Hai vinto, guadagni {mostro.Livello*10} exp");
-                            eroe.AddExp(mostro.Livello*10);
+                            Console.WriteLine($"Hai vinto, guadagni {mostro.Livello * 10} exp");
+                            eroe.AddExp(mostro.Livello * 10);
                         }
                         break;
                     case '2':
@@ -458,7 +458,7 @@ namespace Academy.Week2.MostriVSEroi.Client
         private static bool Fuga()
         {
             Random random = new Random();
-            return random.Next(2)==1;
+            return random.Next(2) == 1;
         }
 
         private static bool Attacco(Mostro mostro, Eroe eroe)
@@ -476,7 +476,7 @@ namespace Academy.Week2.MostriVSEroi.Client
             int danno = mainBL.GetArma(mostro.IdArma).Danno;
             Console.WriteLine($"il mostro infligge un danno di {danno}");
             eroe.PuntiVita -= danno;
-            Console.WriteLine($"vita rimanente del player {(eroe.PuntiVita < 0?0:eroe.PuntiVita)}");
+            Console.WriteLine($"vita rimanente del player {(eroe.PuntiVita < 0 ? 0 : eroe.PuntiVita)}");
             return eroe.PuntiVita <= 0;
         }
     }
