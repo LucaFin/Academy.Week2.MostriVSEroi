@@ -229,21 +229,28 @@ namespace Academy.Week2.MostriVSEroi.Client
         {
             IEnumerable<Eroe> eroes = mainBL.GetEroi(utente.Id);
             StampaEroi(eroes);
-            Console.WriteLine("inserisci id dell'eroe da eliminare");
             int id;
-            while (!int.TryParse(Console.ReadLine(), out id))
+            if(eroes.Any())
             {
-                Console.WriteLine("Inserisci un valore valido");
-            }
-            if (mainBL.RemoveEroe(eroes.Where(e => e.Id == id).FirstOrDefault()))
-            {
-                Console.WriteLine("L'eroe è stato cancellato");
+                Console.WriteLine("inserisci id dell'eroe da eliminare");
+                while (!int.TryParse(Console.ReadLine(), out id))
+                {
+                    Console.WriteLine("Inserisci un valore valido");
+                }
+                if (mainBL.RemoveEroe(eroes.Where(e => e.Id == id).FirstOrDefault()))
+                {
+                    Console.WriteLine("L'eroe è stato cancellato");
+                }
+                else
+                {
+                    Console.WriteLine("Eliminazione annullata");
+                }
             }
         }
 
         private static void StampaEroi(IEnumerable<Eroe> eroi)
         {
-            if(eroi.Count() == 0)
+            if(!eroi.Any())
             {
                 Console.WriteLine("Non possiedi eroi");
             }
@@ -300,21 +307,24 @@ namespace Academy.Week2.MostriVSEroi.Client
             IEnumerable<Eroe> eroes = mainBL.GetEroi(utente.Id);
             StampaEroi(eroes);
             Eroe eroe;
-            Console.WriteLine("inserisci id dell'eroe con cui giocare");
-            do
+            if (eroes.Any())
             {
-                int id;
-                while (!int.TryParse(Console.ReadLine(), out id))
+                Console.WriteLine("inserisci id dell'eroe con cui giocare");
+                do
                 {
-                    Console.WriteLine("Inserisci un valore valido");
-                }
-                eroe = eroes.Where(e => e.Id == id).FirstOrDefault();
-                if(eroe == null)
-                {
-                    Console.WriteLine("non esiste un eroe con quell'id");
-                }
-            }while(eroe == null);
-            Gameplay(utente,eroe);
+                    int id;
+                    while (!int.TryParse(Console.ReadLine(), out id))
+                    {
+                        Console.WriteLine("Inserisci un valore valido");
+                    }
+                    eroe = eroes.Where(e => e.Id == id).FirstOrDefault();
+                    if (eroe == null)
+                    {
+                        Console.WriteLine("non esiste un eroe con quell'id");
+                    }
+                } while (eroe == null);
+                Gameplay(utente, eroe);
+            }
         }
 
         private static void Gameplay(Utente utente, Eroe eroe)
@@ -331,6 +341,7 @@ namespace Academy.Week2.MostriVSEroi.Client
                 fineBattaglia = turnoEroe ? TurnoEroe(mostro, eroe) : TurnoMostro(mostro, eroe);
                 turnoEroe = !turnoEroe;
             }while (!fineBattaglia);
+            eroe.PuntiVita = fullVitaEroe;
             mostro.PuntiVita = fullVitaMostro;
             if (eroe.Livello >= 3)
             {
